@@ -61,6 +61,12 @@ def lexer(line):
 if __name__ == "__main__":
     import sys
 
+    try:
+        # TODO: Remove this when I install PY3K
+        input = raw_input
+    except:
+        pass
+
     if sys.stdin.isatty():
         read = lambda: input("[]> ")
     else:
