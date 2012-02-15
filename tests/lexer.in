@@ -1,0 +1,6 @@
+factorial: n -> 1 if < n 2 else * n (factorial (- n 1).
+print (factorial 10).
+make_adder: x -> : y -> + x y..
+= add_10 (make_adder 10).
+print (add_10 23).
+
