@@ -19,17 +19,21 @@ punctuation = {
 # Small constants that must be space-delimited
 operators = set(['-', '+', '/', '*', '%', '<', '>', '<=', '>=', '==', '='])
 
+
+# re.compile caches these the first time
+rules = [
+    # ID begins with alpha|_ and can contain alpha-numeric. They can also end
+    # with [!?'].
+    (re.compile("^[_a-zA-Z]\w*[!?']?$"), lexemes.IDENTIFIER, lambda x: x),
+    (re.compile("^-?\d+$"), lexemes.INT, int),
+    (re.compile("^-?\d+\.\d+f?$"), lexemes.FLOAT, float),
+]
+
 def lexer(line):
     """ Accept a string and lex it. First replace special characters with
         space-delimited ones and then split on whitespace. Finally, yield tokens
         as they match with rules. """
 
-    # re.compile caches these the first time
-    # ID begins with alpha|_ and can contain alpha-numeric. They can also end
-    # with [!?'].
-    IDENTIFIER = re.compile("^[_a-zA-Z]\w*[!?']?$")
-    INT = re.compile("^-?\d+$")
-    FLOAT = re.compile("^-?\d+\.\d+f?$")
 
     # create space for special characters
     for char in punctuation:
@@ -40,14 +44,14 @@ def lexer(line):
             yield Token(punctuation[tok], tok)
         elif tok in operators:
             yield Token(lexemes.OPERATOR, tok)
-        elif IDENTIFIER.match(tok):
-            yield Token(lexemes.IDENTIFIER, tok)
-        elif INT.match(tok):
-            yield Token(lexemes.INT, int(tok))
-        elif FLOAT.match(tok):
-            yield Token(lexemes.FLOAT, float(tok))
         else:
-            raise LexerError("Unrecognized token '%s'" % tok)
+            for regex, type, action in rules:
+                if regex.match(tok):
+                    value = Token(type, action(tok))
+                    break
+            else:
+                raise LexerError("Unrecognized token '%s'" % tok)
+            yield value
     while 1:
         yield Token(lexemes.EOF, '')
 
