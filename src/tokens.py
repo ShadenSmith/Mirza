@@ -34,3 +34,4 @@ class Token(object):
 
     __repr__ = __str__
 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
