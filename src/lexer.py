@@ -62,9 +62,9 @@ if __name__ == "__main__":
     import sys
 
     if sys.stdin.isatty():
-        read = lambda: raw_input("[]> ")
+        read = lambda: input("[]> ")
     else:
-        read = lambda: raw_input()
+        read = lambda: input()
     while 1:
         try:
             stream = lexer(read())
