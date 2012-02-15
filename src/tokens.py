@@ -20,7 +20,7 @@ class Enum(object):
 lexemes = Enum(
     'IDENTIFIER', 'INT', 'FLOAT', 'LPAREN', 'RPAREN',
     'LBRACKET', 'RBRACKET', 'LBRACE', 'RBRACE', 'COLON',
-    'ARROW', 'DOT', 'EOL', 'EOF'
+    'ARROW', 'DOT', 'OPERATOR', 'EOL', 'EOF'
 )
 
 class Token(object):
