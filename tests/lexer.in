@@ -3,4 +3,6 @@ print (factorial 10).
 make_adder: x -> : y -> + x y..
 = add_10 (make_adder 10).
 print (add_10 23).
+; This is a comment
+succ: x -> + 1 x ; It goes until the end of the line
 

@@ -49,3 +49,10 @@
 <INT '23'>
 <RPAREN ')'>
 <DOT '.'>
+<IDENTIFIER 'succ'>
+<COLON ':'>
+<IDENTIFIER 'x'>
+<ARROW '->'>
+<OPERATOR '+'>
+<INT '1'>
+<IDENTIFIER 'x'>

@@ -1,5 +1,6 @@
-import re
+from __future__ import print_function
 from tokens import *
+import re
 
 # For unrecognized tokens
 class LexerError(Exception):
@@ -44,6 +45,8 @@ def lexer(line):
             yield Token(punctuation[tok], tok)
         elif tok in operators:
             yield Token(lexemes.OPERATOR, tok)
+        elif tok.startswith(";"):
+            break
         else:
             for regex, type, action in rules:
                 if regex.match(tok):
@@ -57,6 +60,7 @@ def lexer(line):
 
 if __name__ == "__main__":
     import sys
+
     if sys.stdin.isatty():
         read = lambda: raw_input("[]> ")
     else:
@@ -66,10 +70,10 @@ if __name__ == "__main__":
             stream = lexer(read())
             token = next(stream)
             while token.type != lexemes.EOF:
-                print token
+                print(token)
                 token = next(stream)
         except LexerError as e:
-            print e
+            print(e)
         except (KeyboardInterrupt, EOFError):
             break
 
