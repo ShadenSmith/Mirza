@@ -103,10 +103,10 @@ if __name__ == '__main__':
         try:
             asm = Assembler(debug)
             program = asm.assemble(open(filename))
-            print "Opcodes:"
-            print ' '.join('%s' % byte for byte in program)
+            print("Opcodes:")
+            print(' '.join('%s' % byte for byte in program))
         except Exception as e:
-            print e
+            print(e)
     else:
-        print "Need file to assemble"
+        print("Need file to assemble")
 

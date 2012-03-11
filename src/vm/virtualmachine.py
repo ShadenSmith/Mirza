@@ -1,5 +1,12 @@
 '''Implements VM and instructions'''
 
+from __future__ import print_function
+
+try:
+    input = raw_input
+except:
+    pass
+
 import opset
 import operator
 from debuggable import Debuggable
@@ -66,11 +73,11 @@ class VirtualMachine(Debuggable):
 
         def out(address):
             """Print data from memory"""
-            print self.memory[address]
+            print(self.memory[address])
 
         def read(address):
             """Read data into memory"""
-            self.memory[address] = int(raw_input("[]> "))
+            self.memory[address] = int(input("[]> "))
 
         # Jump table for unary instructions
         self.unary = [
@@ -117,7 +124,7 @@ if __name__ == "__main__":
             vm = VirtualMachine(debug)
             vm.run(asm.assemble(open(filename)))
         except Exception as e:
-            print e
+            print(e)
     else:
-        print "Need file to assemble and run"
+        print("Need file to assemble and run")
 
