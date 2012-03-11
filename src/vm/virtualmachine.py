@@ -40,6 +40,8 @@ class VirtualMachine(Debuggable):
                 self.stack[-1] = int(function(self.stack[-1], x))
             return op
 
+        operator.div = operator.floordiv
+
         # Nullary jump table
         self.nullary = [
             stackop2(operator.add),
