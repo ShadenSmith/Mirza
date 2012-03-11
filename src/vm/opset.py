@@ -2,6 +2,7 @@
 
 # Map index (instruction) to name
 byte2name = [
+              # sp -> pointer to top of stack
     'ADD',    # *--sp = *(sp - 1) + *sp
     'SUB',    # *--sp = *(sp - 1) - *sp
     'MUL',    # *--sp = *(sp - 1) * *sp
@@ -18,7 +19,7 @@ byte2name = [
     'ROT',    # swap(*sp, *(sp - 1))
     'LIT',    # *++sp = literal int
     'LOAD',   # *++sp = mem[addr]
-    'SAVE',   # mem[addr] = *++sp
+    'SAVE',   # mem[addr] = *sp--
     'OUT',    # print mem[addr]
     'IN',     # read mem[addr]
     'JMP',    # goto label
