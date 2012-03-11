@@ -2,18 +2,18 @@
 
 # Map index (instruction) to name
 byte2name = [
-    'ADD',    # *sp = *(sp - 1) + *sp
-    'SUB',    # *sp = *(sp - 1) - *sp
-    'MUL',    # *sp = *(sp - 1) * *sp
-    'DIV',    # *sp = *(sp - 1) / *sp
-    'LT',     # *sp = *(sp - 1) < *sp
-    'GT',     # *sp = *(sp - 1) > *sp
-    'EQ',     # *sp = *(sp - 1) == *sp
-    'LE',     # *sp = *(sp - 1) <= *sp
-    'GE',     # *sp = *(sp - 1) >= *sp
-    'AND',    # *sp = *(sp - 1) & *sp
-    'OR',     # *sp = *(sp - 1) | *sp
-    'XOR',    # *sp = *(sp - 1) ^ *sp
+    'ADD',    # *--sp = *(sp - 1) + *sp
+    'SUB',    # *--sp = *(sp - 1) - *sp
+    'MUL',    # *--sp = *(sp - 1) * *sp
+    'DIV',    # *--sp = *(sp - 1) / *sp
+    'LT',     # *--sp = *(sp - 1) < *sp
+    'GT',     # *--sp = *(sp - 1) > *sp
+    'EQ',     # *--sp = *(sp - 1) == *sp
+    'LE',     # *--sp = *(sp - 1) <= *sp
+    'GE',     # *--sp = *(sp - 1) >= *sp
+    'AND',    # *--sp = *(sp - 1) & *sp
+    'OR',     # *--sp = *(sp - 1) | *sp
+    'XOR',    # *--sp = *(sp - 1) ^ *sp
     'DUP',    # *++sp = *sp
     'ROT',    # swap(*sp, *(sp - 1))
     'LIT',    # *++sp = literal int
