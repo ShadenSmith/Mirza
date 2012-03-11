@@ -98,18 +98,17 @@ class Assembler(Debuggable):
 if __name__ == '__main__':
 
     from sys import argv
+    from argparser import parseArgs
 
-    if len(argv) >= 2:
-        filename = argv[1]
-        debug = len(argv) > 2
-        try:
-            asm = Assembler(debug)
-            program = asm.assemble(open(filename))
-            print("Opcodes:")
-            print(' '.join('%s' % byte for byte in program))
-        except Exception as e:
-            print(e)
-    else:
-        print("Need file to assemble")
+    # Parse command line arguments
+    args = parseArgs()
+
+    try:
+        asm = Assembler(args.debug)
+        program = asm.assemble(open(args.filename))
+        print("Opcodes:")
+        print(' '.join('%s' % byte for byte in program))
+    except Exception as e:
+        print(e)
 
 # vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

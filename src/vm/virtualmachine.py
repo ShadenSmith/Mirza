@@ -114,19 +114,11 @@ class VirtualMachine(Debuggable):
                 else:
                     self.unary[instruction - opset.LIT](argument)
 
-def parseArgs():
-   '''Parse command line arguments with argparse module.'''
-   from argparse import ArgumentParser
-
-   parser = ArgumentParser()
-   parser.add_argument('--debug', action='store_true', default=False)
-   parser.add_argument('filename', action='store')
-
-   return parser.parse_args()
 
 if __name__ == "__main__":
     from sys import argv
     from assembler import Assembler
+    from argparser import parseArgs
 
     # Grab command line arguments
     args = parseArgs()
