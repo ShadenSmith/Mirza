@@ -112,3 +112,4 @@ if __name__ == '__main__':
     else:
         print("Need file to assemble")
 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

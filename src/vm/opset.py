@@ -63,3 +63,4 @@ def symbolarg(byte):
     '''Does instruction take something defined by LABEL or MEM as its argument?'''
     return LIT < byte < LABEL
 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

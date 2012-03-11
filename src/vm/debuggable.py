@@ -12,3 +12,4 @@ class Debuggable(object):
         else:
             self.debug = lambda *args: None
 
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4

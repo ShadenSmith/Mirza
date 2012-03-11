@@ -114,19 +114,28 @@ class VirtualMachine(Debuggable):
                 else:
                     self.unary[instruction - opset.LIT](argument)
 
+def parseArgs():
+   '''Parse command line arguments with argparse module.'''
+   from argparse import ArgumentParser
+
+   parser = ArgumentParser()
+   parser.add_argument('--debug', action='store_true', default=False)
+   parser.add_argument('filename', action='store')
+
+   return parser.parse_args()
+
 if __name__ == "__main__":
     from sys import argv
     from assembler import Assembler
 
-    if len(argv) >= 2:
-        filename = argv[1]
-        debug = len(argv) > 2
-        try:
-            asm = Assembler(debug)
-            vm = VirtualMachine(debug)
-            vm.run(asm.assemble(open(filename)))
-        except Exception as e:
-            print(e)
-    else:
-        print("Need file to assemble and run")
+    # Grab command line arguments
+    args = parseArgs()
 
+    try:
+        asm = Assembler(args.debug)
+        vm = VirtualMachine(args.debug)
+        vm.run(asm.assemble(open(args.filename)))
+    except Exception as e:
+        print(e)
+
+# vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
