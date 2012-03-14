@@ -16,6 +16,7 @@ class VirtualMachine(Debuggable):
         '''Build stack, memory, and instruction set'''
         self.stack = []
         self.memory = []
+        self.pc = 0
         self.build()
         Debuggable.__init__(self, "[VM]", debug)
 
@@ -81,6 +82,15 @@ class VirtualMachine(Debuggable):
             """Read data into memory"""
             self.memory[address] = int(input("[]> "))
 
+        def jmp(address):
+            '''Unconditional jump'''
+            self.pc = address
+
+        def jnz(address):
+            '''Jump if top of stack is nonzero'''
+            if self.stack[-1]:
+                self.pc = address
+
         # Jump table for unary instructions
         self.unary = [
             lit,
@@ -88,32 +98,27 @@ class VirtualMachine(Debuggable):
             save,
             out,
             read,
+            jmp,
+            jnz,
         ]
 
     def run(self, program):
         '''Execute list of instructions'''
-        self.memory = [0] * program[0]
-        pc = 1
+        self.memory = [0] * program[0] # First opcode is memory size requirement
+        self.pc = 1
         end = len(program)
 
-        while pc < end and program[pc] != opset.HALT:
-            instruction = program[pc]
-            pc += 1
+        while self.pc < end and program[self.pc] != opset.HALT:
+            instruction = program[self.pc]
+            self.pc += 1
             if opset.nullary(instruction):
-                self.debug("%02d %s", pc, opset.byte2name[instruction])
+                self.debug("%02d %s", self.pc, opset.byte2name[instruction])
                 self.nullary[instruction]()
             elif opset.unary(instruction):
-                argument = program[pc]
-                pc += 1
-                self.debug("%02d %s %s", pc, opset.byte2name[instruction], argument)
-                if instruction == opset.JMP:
-                    pc = argument
-                elif instruction == opset.JNZ:
-                    if self.stack[-1]:
-                        pc = argument
-                else:
-                    self.unary[instruction - opset.LIT](argument)
-
+                argument = program[self.pc]
+                self.pc += 1
+                self.debug("%02d %s %s", self.pc, opset.byte2name[instruction], argument)
+                self.unary[instruction - opset.LIT](argument)
 
 if __name__ == "__main__":
     from sys import argv

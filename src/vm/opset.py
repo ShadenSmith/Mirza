@@ -24,7 +24,7 @@ byte2name = [
     'IN',     # read mem[addr]
     'JMP',    # goto label
     'JNZ',    # goto label if *sp
-    'LABEL',  # label symble
+    'LABEL',  # label symbol
     'MEM',    # mem symbol
     'NOP',    # no-op
     'HALT',   # die
