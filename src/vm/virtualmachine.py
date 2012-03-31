@@ -104,9 +104,9 @@ class VirtualMachine(Debuggable):
 
     def run(self, program):
         '''Execute list of instructions'''
-        self.memory = [0] * program[0] # First opcode is memory size requirement
-        self.pc = 1
-        end = len(program)
+        end = program[0] # First opcode is length
+        self.memory = [0] * program[1] # Second opcode is memory size requirement
+        self.pc = 2
 
         while self.pc < end and program[self.pc] != opset.HALT:
             instruction = program[self.pc]

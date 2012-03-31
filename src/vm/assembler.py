@@ -12,6 +12,12 @@ class Assembler(Debuggable):
         '''Return list of opcodes, indices, and addresses'''
         return self.relabel(*self.findsymbols(self.translate(file)))
 
+    def assemblebinary(self, file):
+        '''Assemble and format as binary list of integers'''
+        from array import array
+        program = self.assemble(file)
+        return array('I', program)
+
     def translate(self, file):
         '''First pass - convert instructions to opcodes'''
         program = []
@@ -45,7 +51,7 @@ class Assembler(Debuggable):
         symbols = {opset.LABEL: {}, opset.MEM: {}}
         pc = addr = 0
         end = len(program)
-        newprogram = [0]
+        newprogram = [0, 0]
 
         self.debug("Finding labels and variables")
 
@@ -70,8 +76,10 @@ class Assembler(Debuggable):
                 else:
                     newprogram.append(instruction)
                     newprogram.append(argument)
-        # First instruction is memory requirement
-        newprogram[0] = addr
+        # First instruction is length
+        newprogram[0] = len(newprogram)
+        # Second instruction is memory requirement
+        newprogram[1] = addr
         return newprogram, symbols
 
     def relabel(self, program, symbols):
@@ -105,9 +113,11 @@ if __name__ == '__main__':
 
     try:
         asm = Assembler(args.debug)
-        program = asm.assemble(open(args.filename))
-        print("Opcodes:")
-        print(' '.join('%s' % byte for byte in program))
+        if args.binary:
+            asm.assemblebinary(open(args.filename)).tofile(open(args.filename + ".bin", 'wb'))
+        else:
+            program = asm.assemble(open(args.filename))
+            print(' '.join('%s' % byte for byte in program))
     except Exception as e:
         print(e)
 
