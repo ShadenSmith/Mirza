@@ -1,9 +1,5 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
-#include <string>
-#include <algorithm>
-
 #include <stdarg.h>
 
 #include "opset.h"
@@ -154,19 +150,20 @@ int main(int argc, char *argv[]) {
     }
 
     int length = 0;
-    if(fread(&length, 4, 1, file) != 1 || length <= 0) {
+    if(fread(&length, sizeof(int), 1, file) != 1 || length <= 0) {
         std::cout << "Malformed binary file" << std::endl;
         return -1;
     }
 
     int *program = new int[length];
     program[0] = length;
-    if(fread(program + 1, 4, length, file) < length - 1) {
+    if(fread(program + 1, sizeof(int), length - 1, file) < length - 1) {
         std::cout << "Incorrect length specification" << std::endl;
         return -1;
     }
 
     run(program);
+    delete[] program;
 
     return 0;
 }
