@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cstdio>
 #include <stdarg.h>
 
 #include "opset.h"
